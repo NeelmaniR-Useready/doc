@@ -164,12 +164,13 @@ quadrantChart
     quadrant-2 Enterprise Minimalist
     quadrant-3 Research Experimental
     quadrant-4 Developer Friendly
-    Microsoft Agent Framework: [0.75, 0.85]
-    OpenAI Agents SDK: [0.30, 0.70]
-    LangGraph: [0.65, 0.75]
-    CrewAI: [0.55, 0.55]
-    AutoGen v0.4 (legacy): [0.40, 0.35]
-    Semantic Kernel (legacy): [0.80, 0.80]
+
+    "Microsoft Agent Framework": [0.75, 0.85]
+    "OpenAI Agents SDK": [0.30, 0.70]
+    "LangGraph": [0.65, 0.75]
+    "CrewAI": [0.55, 0.55]
+    "AutoGen v0.4 (legacy)": [0.40, 0.35]
+    "Semantic Kernel (legacy)": [0.80, 0.80]
 ```
 
 ---
@@ -180,78 +181,85 @@ quadrantChart
 
 ```mermaid
 graph TB
-    subgraph "Microsoft Agent Framework - Layered Architecture"
+
+    subgraph MAF["Microsoft Agent Framework - Layered Architecture"]
         direction TB
-        
-        subgraph "Application Layer"
-            APP[User Application / Business Logic]
+
+        subgraph APP_LAYER["Application Layer"]
+            APP["User Application / Business Logic"]
         end
-        
-        subgraph "Orchestration Layer"
-            WF[Workflow Engine<br/>Graph-Based Orchestration]
-            ORCH[Agent Orchestrator<br/>Sequential / Concurrent / GroupChat / Magentic]
+
+        subgraph ORCH_LAYER["Orchestration Layer"]
+            WF["Workflow Engine<br/>Graph-Based Orchestration"]
+            ORCH["Agent Orchestrator<br/>Sequential / Concurrent / GroupChat / Magentic"]
         end
-        
-        subgraph "Agent Layer"
-            AG1[AIAgent 1<br/>Specialized Role]
-            AG2[AIAgent 2<br/>Specialized Role]
-            AG3[AIAgent N<br/>Specialized Role]
+
+        subgraph AGENT_LAYER["Agent Layer"]
+            AG1["AIAgent 1<br/>Specialized Role"]
+            AG2["AIAgent 2<br/>Specialized Role"]
+            AG3["AIAgent N<br/>Specialized Role"]
         end
-        
-        subgraph "Core Runtime"
-            RT[Agent Runtime<br/>Message Passing / Event Bus]
-            MW[Middleware Pipeline<br/>Filters / Safety / Logging]
-            SESS[Session Manager<br/>State & Context]
+
+        subgraph CORE_LAYER["Core Runtime"]
+            RT["Agent Runtime<br/>Message Passing / Event Bus"]
+            MW["Middleware Pipeline<br/>Filters / Safety / Logging"]
+            SESS["Session Manager<br/>State & Context"]
         end
-        
-        subgraph "Foundation Layer"
-            MC[Model Clients<br/>Azure OpenAI / OpenAI / Anthropic / Gemini / Ollama]
-            MEM[Memory / Context Providers<br/>Conversational / Key-Value / Vector]
-            TOOLS[Tool Registry<br/>Functions / MCP / Plugins]
+
+        subgraph FOUNDATION_LAYER["Foundation Layer"]
+            MC["Model Clients<br/>Azure OpenAI / OpenAI / Anthropic / Gemini / Ollama"]
+            MEM["Memory / Context Providers<br/>Conversational / Key-Value / Vector"]
+            TOOLS["Tool Registry<br/>Functions / MCP / Plugins"]
         end
-        
-        subgraph "Protocol Layer"
-            MCP_P[MCP Client<br/>Model Context Protocol]
-            A2A_P[A2A Protocol<br/>Agent-to-Agent]
-            OA[OpenAPI<br/>Integration]
+
+        subgraph PROTOCOL_LAYER["Protocol Layer"]
+            MCP_P["MCP Client<br/>Model Context Protocol"]
+            A2A_P["A2A Protocol<br/>Agent-to-Agent"]
+            OA["OpenAPI<br/>Integration"]
         end
-        
-        subgraph "Enterprise Layer"
-            OT[OpenTelemetry<br/>Azure Monitor]
-            AUTH[Entra ID / Auth<br/>Azure Key Vault]
-            CICD[CI/CD<br/>GitHub Actions / DevOps]
+
+        subgraph ENTERPRISE_LAYER["Enterprise Layer"]
+            OT["OpenTelemetry<br/>Azure Monitor"]
+            AUTH["Entra ID / Auth<br/>Azure Key Vault"]
+            CICD["CI/CD<br/>GitHub Actions / DevOps"]
         end
     end
-    
+
     APP --> WF
     APP --> ORCH
+
     WF --> AG1
     WF --> AG2
     WF --> AG3
+
     ORCH --> AG1
     ORCH --> AG2
     ORCH --> AG3
+
     AG1 --> RT
     AG2 --> RT
     AG3 --> RT
+
     RT --> MW
     MW --> SESS
+
     SESS --> MC
     SESS --> MEM
     SESS --> TOOLS
+
     TOOLS --> MCP_P
     AG1 --> A2A_P
+
     RT --> OT
     MC --> AUTH
-    
-    style "Microsoft Agent Framework - Layered Architecture" fill:#0078d4,color:#fff,stroke:#005a9e
-    style "Application Layer" fill:#deecf9,stroke:#0078d4
-    style "Orchestration Layer" fill:#d0e8ff,stroke:#0078d4
-    style "Agent Layer" fill:#bdd9f7,stroke:#0078d4
-    style "Core Runtime" fill:#a9caef,stroke:#0078d4
-    style "Foundation Layer" fill:#95bbe7,stroke:#0078d4
-    style "Protocol Layer" fill:#81acdf,stroke:#0078d4
-    style "Enterprise Layer" fill:#6d9dd7,stroke:#0078d4
+
+    style APP_LAYER fill:#deecf9,stroke:#0078d4
+    style ORCH_LAYER fill:#d0e8ff,stroke:#0078d4
+    style AGENT_LAYER fill:#bdd9f7,stroke:#0078d4
+    style CORE_LAYER fill:#a9caef,stroke:#0078d4
+    style FOUNDATION_LAYER fill:#95bbe7,stroke:#0078d4
+    style PROTOCOL_LAYER fill:#81acdf,stroke:#0078d4
+    style ENTERPRISE_LAYER fill:#6d9dd7,stroke:#0078d4
 ```
 
 **Key MAF Architectural Principles:**
@@ -266,86 +274,92 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph "OpenAI Agents SDK - Architecture"
+
+    subgraph OAI["OpenAI Agents SDK - Architecture"]
         direction TB
-        
-        subgraph "Entry Point"
-            RUN[Runner.run / Runner.run_sync<br/>Execution Engine]
+
+        subgraph ENTRY["Entry Point"]
+            RUN["Runner.run / Runner.run_sync<br/>Execution Engine"]
         end
-        
-        subgraph "Agent Loop"
+
+        subgraph LOOP["Agent Loop"]
             direction LR
-            LLM_CALL[LLM Call<br/>via Responses / Chat Completions API]
-            TOOL_EXE[Tool Execution<br/>Function / Hosted / MCP / Agent-as-Tool]
-            HANDOFF[Handoff Resolution<br/>Agent Transfer]
-            GRD[Guardrail Evaluation<br/>Input / Output Validation]
+            LLM_CALL["LLM Call<br/>via Responses / Chat Completions API"]
+            TOOL_EXE["Tool Execution<br/>Function / Hosted / MCP / Agent-as-Tool"]
+            HANDOFF["Handoff Resolution<br/>Agent Transfer"]
+            GRD["Guardrail Evaluation<br/>Input / Output Validation"]
         end
-        
-        subgraph "Agent Definition"
-            AGENT[Agent<br/>name, instructions, model, tools, handoffs, guardrails, output_type]
-            CTX[Context Object<br/>Dependency Injection / State]
+
+        subgraph AGENT_DEF["Agent Definition"]
+            AGENT["Agent<br/>name, instructions, model, tools, handoffs, guardrails, output_type"]
+            CTX["Context Object<br/>Dependency Injection / State"]
         end
-        
-        subgraph "Tool Types"
-            FT[Function Tools<br/>Python / TS functions with auto schema]
-            HT[Hosted Tools<br/>Web Search / File Search / Code Interpreter]
-            AT[Agent-as-Tool<br/>Sub-agent invocation]
-            MCPT[MCP Tool<br/>MCP server integration]
-            SBT[Sandbox Tools<br/>Filesystem / Shell / Apply Patch]
+
+        subgraph TOOLS_LAYER["Tool Types"]
+            FT["Function Tools<br/>Python / TS functions with auto schema"]
+            HT["Hosted Tools<br/>Web Search / File Search / Code Interpreter"]
+            AT["Agent-as-Tool<br/>Sub-agent invocation"]
+            MCPT["MCP Tool<br/>MCP server integration"]
+            SBT["Sandbox Tools<br/>Filesystem / Shell / Apply Patch"]
         end
-        
-        subgraph "Memory & Sessions"
-            SESS_OAI[Sessions<br/>Persistent working context]
-            STORE[Memory Store<br/>Configurable backends]
+
+        subgraph MEMORY["Memory & Sessions"]
+            SESS_OAI["Sessions<br/>Persistent working context"]
+            STORE["Memory Store<br/>Configurable backends"]
         end
-        
-        subgraph "Observability"
-            TRACE[Tracing Engine<br/>Spans / Traces per run]
-            PROC[Trace Processors<br/>OpenAI Dashboard / External]
+
+        subgraph OBS["Observability"]
+            TRACE["Tracing Engine<br/>Spans / Traces per run"]
+            PROC["Trace Processors<br/>OpenAI Dashboard / External"]
         end
-        
-        subgraph "Sandbox"
-            SB[Sandbox Environment<br/>E2B / Modal / Vercel / Runloop / Daytona / Blaxel / Cloudflare]
-            MAN[Manifest<br/>Workspace definition]
+
+        subgraph SANDBOX["Sandbox"]
+            SB["Sandbox Environment<br/>E2B / Modal / Vercel / Runloop / Daytona / Blaxel / Cloudflare"]
+            MAN["Manifest<br/>Workspace definition"]
         end
-        
-        subgraph "Hooks"
-            RH[RunHooks<br/>Whole-run observers]
-            AH[AgentHooks<br/>Per-agent observers]
+
+        subgraph HOOKS["Hooks"]
+            RH["RunHooks<br/>Whole-run observers"]
+            AH["AgentHooks<br/>Per-agent observers"]
         end
     end
-    
-    RUN --> Agent Loop
+
+    RUN --> LLM_CALL
+
     LLM_CALL --> TOOL_EXE
     TOOL_EXE --> HANDOFF
     HANDOFF --> GRD
     GRD --> LLM_CALL
+
     AGENT --> RUN
     CTX --> RUN
-    FT --> Tool Types
-    HT --> Tool Types
-    AT --> Tool Types
-    MCPT --> Tool Types
-    SBT --> Tool Types
-    Tool Types --> TOOL_EXE
+
+    FT --> TOOL_EXE
+    HT --> TOOL_EXE
+    AT --> TOOL_EXE
+    MCPT --> TOOL_EXE
+    SBT --> TOOL_EXE
+
     SESS_OAI --> RUN
     STORE --> SESS_OAI
+
     RUN --> TRACE
     TRACE --> PROC
+
     SB --> RUN
     MAN --> SB
+
     RH --> RUN
     AH --> AGENT
 
-    style "OpenAI Agents SDK - Architecture" fill:#10a37f,color:#fff,stroke:#0d8a6b
-    style "Entry Point" fill:#d4f1e8,stroke:#10a37f
-    style "Agent Loop" fill:#c3ebdf,stroke:#10a37f
-    style "Agent Definition" fill:#b2e4d6,stroke:#10a37f
-    style "Tool Types" fill:#a1ddcd,stroke:#10a37f
-    style "Memory & Sessions" fill:#90d6c4,stroke:#10a37f
-    style "Observability" fill:#7fcebb,stroke:#10a37f
-    style "Sandbox" fill:#6ec7b2,stroke:#10a37f
-    style "Hooks" fill:#5dc0a9,stroke:#10a37f
+    style ENTRY fill:#d4f1e8,stroke:#10a37f
+    style LOOP fill:#c3ebdf,stroke:#10a37f
+    style AGENT_DEF fill:#b2e4d6,stroke:#10a37f
+    style TOOLS_LAYER fill:#a1ddcd,stroke:#10a37f
+    style MEMORY fill:#90d6c4,stroke:#10a37f
+    style OBS fill:#7fcebb,stroke:#10a37f
+    style SANDBOX fill:#6ec7b2,stroke:#10a37f
+    style HOOKS fill:#5dc0a9,stroke:#10a37f
 ```
 
 **Key OpenAI Agents SDK Architectural Principles:**
@@ -429,7 +443,8 @@ mindmap
 
 ```mermaid
 mindmap
-  root((OpenAI SDK<br/>Primitives))
+  root((OpenAI SDK Primitives))
+
     Agent
       name
       instructions
@@ -439,52 +454,63 @@ mindmap
       guardrails
       output_type
       context_type
+
     Tools
       Function Tools
-        @function_tool decorator
+        "@function_tool decorator"
         Auto schema generation
         Pydantic validation
+
       Hosted Tools
         Web Search
         File Search
         Code Interpreter
-      Agent-as-Tool
+
+      "Agent-as-Tool"
         Hierarchical sub-agents
         Returns result to parent
-      MCP Tools
+
+      "MCP Tools"
         Native MCP integration
         Same as function tools
-      Sandbox Tools
+
+      "Sandbox Tools"
         Filesystem tools
         Shell execution
         Apply patch
+
     Handoffs
-      handoff() function
+      "handoff function"
       tool_name_override
       tool_description_override
       on_handoff callback
       input_filter
+
     Guardrails
-      Input Guardrails
-      Output Guardrails
-      Parallel execution
-      Tripwire mechanism
+      "Input Guardrails"
+      "Output Guardrails"
+      "Parallel execution"
+      "Tripwire mechanism"
       GuardrailFunctionOutput
+
     Runner
-      Runner.run async
-      Runner.run_sync sync
+      "Runner.run async"
+      "Runner.run_sync sync"
       Runner.run_streamed
-      Turn management
-      Tool call handling
+      "Turn management"
+      "Tool call handling"
+
     Sessions
-      Session persistence
-      Working context
-      Cross-turn memory
+      "Session persistence"
+      "Working context"
+      "Cross-turn memory"
+
     Tracing
-      Automatic trace generation
-      Spans and traces
-      Custom processors
-      OpenAI dashboard
+      "Automatic trace generation"
+      "Spans and traces"
+      "Custom processors"
+      "OpenAI dashboard"
+
     Hooks
       RunHooks
       AgentHooks
@@ -811,24 +837,27 @@ graph LR
 
 ```mermaid
 graph TB
-    subgraph "MAF Tool Ecosystem"
-        AG[Agent] --> TR[Tool Registry]
-        
-        TR --> FT[Function Tools<br/>@function_tool decorator]
-        TR --> MCP_C[MCP Client Tools<br/>Dynamic discovery from MCP servers]
-        TR --> PLUG[Plugin System<br/>Semantic Kernel plugin compatibility]
-        TR --> OA_T[OpenAPI Tools<br/>Auto-generated from OpenAPI specs]
-        TR --> AZURE_T[Azure Connectors<br/>Azure AI Search / Azure Functions]
-        
-        MCP_C --> MCP1[MCP Server: Enterprise DB]
-        MCP_C --> MCP2[MCP Server: SharePoint]
-        MCP_C --> MCP3[MCP Server: Microsoft Graph]
-        MCP_C --> MCP4[MCP Server: Elastic / Redis]
-        MCP_C --> MCP5[MCP Server: Azure AI Foundry]
-        MCP_C --> MCP_N[1400+ business system MCP servers]
+
+    subgraph MAF["MAF Tool Ecosystem"]
+
+        AG["Agent"] --> TR["Tool Registry"]
+
+        TR --> FT["Function Tools<br/>@function_tool decorator"]
+        TR --> MCP_C["MCP Client Tools<br/>Dynamic discovery from MCP servers"]
+        TR --> PLUG["Plugin System<br/>Semantic Kernel plugin compatibility"]
+        TR --> OA_T["OpenAPI Tools<br/>Auto-generated from OpenAPI specs"]
+        TR --> AZURE_T["Azure Connectors<br/>Azure AI Search / Azure Functions"]
+
+        MCP_C --> MCP1["MCP Server: Enterprise DB"]
+        MCP_C --> MCP2["MCP Server: SharePoint"]
+        MCP_C --> MCP3["MCP Server: Microsoft Graph"]
+        MCP_C --> MCP4["MCP Server: Elastic / Redis"]
+        MCP_C --> MCP5["MCP Server: Azure AI Foundry"]
+        MCP_C --> MCP_N["1400+ business system MCP servers"]
+
     end
-    
-    style "MAF Tool Ecosystem" fill:#0078d4,color:#fff
+
+    style MAF fill:#0078d4,color:#fff,stroke:#005a9e
 ```
 
 **MAF Tool Registration:**
@@ -859,29 +888,32 @@ tools:
 
 ```mermaid
 graph TB
-    subgraph "OpenAI SDK Tool Ecosystem"
-        AG_O[Agent] --> TOOLS[Tool Collection]
-        
-        TOOLS --> FT_O[Function Tools<br/>@function_tool auto-schema]
-        TOOLS --> HT_O[Hosted Tools<br/>Managed by OpenAI]
-        TOOLS --> AAT[Agent-as-Tool<br/>Sub-agent invocation]
-        TOOLS --> MCP_OAI[MCP Tools<br/>Native MCP server integration]
-        TOOLS --> SB_T[Sandbox Tools<br/>Filesystem / Shell / Patch]
-        
-        HT_O --> WS[Web Search]
-        HT_O --> FS[File Search<br/>Vector Store]
-        HT_O --> CI[Code Interpreter]
-        
-        SB_T --> E2B[E2B Sandbox]
-        SB_T --> MODAL[Modal]
-        SB_T --> VERCEL[Vercel]
-        SB_T --> RUNLOOP[Runloop]
-        SB_T --> DAYTONA[Daytona]
-        SB_T --> BLAXEL[Blaxel]
-        SB_T --> CF[Cloudflare]
+
+    subgraph OAI_TOOLS["OpenAI SDK Tool Ecosystem"]
+
+        AG_O["Agent"] --> TOOLS["Tool Collection"]
+
+        TOOLS --> FT_O["Function Tools<br/>@function_tool auto-schema"]
+        TOOLS --> HT_O["Hosted Tools<br/>Managed by OpenAI"]
+        TOOLS --> AAT["Agent-as-Tool<br/>Sub-agent invocation"]
+        TOOLS --> MCP_OAI["MCP Tools<br/>Native MCP server integration"]
+        TOOLS --> SB_T["Sandbox Tools<br/>Filesystem / Shell / Patch"]
+
+        HT_O --> WS["Web Search"]
+        HT_O --> FS["File Search<br/>Vector Store"]
+        HT_O --> CI["Code Interpreter"]
+
+        SB_T --> E2B["E2B Sandbox"]
+        SB_T --> MODAL["Modal"]
+        SB_T --> VERCEL["Vercel"]
+        SB_T --> RUNLOOP["Runloop"]
+        SB_T --> DAYTONA["Daytona"]
+        SB_T --> BLAXEL["Blaxel"]
+        SB_T --> CF["Cloudflare"]
+
     end
-    
-    style "OpenAI SDK Tool Ecosystem" fill:#10a37f,color:#fff
+
+    style OAI_TOOLS fill:#10a37f,color:#fff,stroke:#0d8a6b
 ```
 
 **OpenAI SDK Tool Registration:**
@@ -1037,32 +1069,34 @@ memory = MemoryStore(backend="mem0", config={...})
 
 ```mermaid
 graph TB
-    subgraph "MAF Communication Patterns"
-        
-        subgraph "Same-Runtime (Python/NET)"
-            AG_A[Agent A] -->|IMessage via Event Bus| RT[Runtime]
-            RT -->|route| AG_B[Agent B]
+
+    subgraph MAF_COMM["MAF Communication Patterns"]
+
+        subgraph SAME_RUNTIME["Same-Runtime (Python/.NET)"]
+            AG_A["Agent A"] -->|"IMessage via Event Bus"| RT["Runtime"]
+            RT -->|route| AG_B["Agent B"]
         end
-        
-        subgraph "Cross-Runtime A2A"
-            PY_AG[Python Agent] -->|A2A Protocol| A2A_GW[A2A Gateway]
-            A2A_GW -->|structured message| NET_AG[.NET Agent]
-            NET_AG -->|A2A response| A2A_GW
+
+        subgraph CROSS_RUNTIME["Cross-Runtime A2A"]
+            PY_AG["Python Agent"] -->|"A2A Protocol"| A2A_GW["A2A Gateway"]
+            A2A_GW -->|"structured message"| NET_AG[".NET Agent"]
+            NET_AG -->|"A2A response"| A2A_GW
             A2A_GW -->|deliver| PY_AG
         end
-        
-        subgraph "Cross-Framework A2A"
-            MAF_AG[MAF Agent] -->|A2A Protocol| OTHER[LangGraph Agent]
-            MAF_AG -->|A2A Protocol| CREW[CrewAI Agent]
+
+        subgraph CROSS_FRAMEWORK["Cross-Framework A2A"]
+            MAF_AG["MAF Agent"] -->|"A2A Protocol"| OTHER["LangGraph Agent"]
+            MAF_AG -->|"A2A Protocol"| CREW["CrewAI Agent"]
         end
-        
-        subgraph "Tool Communication (MCP)"
-            AG_T[Agent] -->|MCPClient| MCP_SRV[MCP Server]
-            MCP_SRV -->|tools/resources/prompts| AG_T
+
+        subgraph MCP_COMM["Tool Communication (MCP)"]
+            AG_T["Agent"] -->|"MCPClient"| MCP_SRV["MCP Server"]
+            MCP_SRV -->|"tools/resources/prompts"| AG_T
         end
+
     end
-    
-    style "MAF Communication Patterns" fill:#0078d4,color:#fff
+
+    style MAF_COMM fill:#0078d4,color:#fff,stroke:#005a9e
 ```
 
 **MAF Communication Protocol Details:**
@@ -1081,29 +1115,31 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph "OpenAI SDK Communication Patterns"
-        
-        subgraph "Handoff Transfer"
-            TA[Triage Agent] -->|LLM calls transfer_to_B| HW{Handoff}
-            HW -->|full conversation context| BA[Billing Agent]
-            BA -->|owns conversation thread| BA
+
+    subgraph OAI_COMM["OpenAI SDK Communication Patterns"]
+
+        subgraph HANDOFF["Handoff Transfer"]
+            TA["Triage Agent"] -->|"LLM calls transfer_to_B"| HW{"Handoff"}
+            HW -->|"full conversation context"| BA["Billing Agent"]
+            BA -->|"owns conversation thread"| BA
         end
-        
-        subgraph "Agent-as-Tool"
-            OA[Orchestrator] -->|invoke sub-agent as tool| SA1[Sub-Agent A]
-            OA -->|invoke sub-agent as tool| SA2[Sub-Agent B]
-            SA1 -->|return result to orchestrator| OA
-            SA2 -->|return result to orchestrator| OA
+
+        subgraph AGENT_TOOL["Agent-as-Tool"]
+            OA["Orchestrator"] -->|"invoke sub-agent as tool"| SA1["Sub-Agent A"]
+            OA -->|"invoke sub-agent as tool"| SA2["Sub-Agent B"]
+            SA1 -->|"return result to orchestrator"| OA
+            SA2 -->|"return result to orchestrator"| OA
         end
-        
-        subgraph "Tool Call Pattern"
-            AG_O[Agent] -->|Responses API / Chat Completions| LLM[OpenAI / Any LLM]
+
+        subgraph TOOL_CALL["Tool Call Pattern"]
+            AG_O["Agent"] -->|"Responses API / Chat Completions"| LLM["OpenAI / Any LLM"]
             LLM -->|tool_calls| AG_O
-            AG_O -->|execute + return| LLM
+            AG_O -->|"execute + return"| LLM
         end
+
     end
-    
-    style "OpenAI SDK Communication Patterns" fill:#10a37f,color:#fff
+
+    style OAI_COMM fill:#10a37f,color:#fff,stroke:#0d8a6b
 ```
 
 | Communication Aspect | MAF | OpenAI SDK |
@@ -1219,22 +1255,29 @@ agent = Agent(
 
 ```mermaid
 graph LR
-    subgraph "MAF Observability"
-        AG_MAF[Agent Execution] --> OT[OpenTelemetry SDK]
-        OT --> SPANS[Traces & Spans]
-        SPANS --> AZ_MON[Azure Monitor<br/>Application Insights]
-        SPANS --> PROM[Prometheus]
-        SPANS --> JAEGER[Jaeger]
-        SPANS --> CUSTOM[Custom Exporters]
-        
-        AG_MAF --> DEVUI[DevUI<br/>Browser-based local debugger]
-        DEVUI --> VIZ[Visual agent execution<br/>message flows / tool calls<br/>orchestration decisions]
-        
-        AG_MAF --> AUDIT_LOG[Audit Log<br/>Every action recorded]
-        AUDIT_LOG --> AZ_LOG[Azure Log Analytics]
+
+    subgraph MAF_OBS["MAF Observability"]
+
+        AG_MAF["Agent Execution"] --> OT["OpenTelemetry SDK"]
+
+        OT --> SPANS["Traces & Spans"]
+
+        SPANS --> AZ_MON["Azure Monitor<br/>Application Insights"]
+        SPANS --> PROM["Prometheus"]
+        SPANS --> JAEGER["Jaeger"]
+        SPANS --> CUSTOM["Custom Exporters"]
+
+        AG_MAF --> DEVUI["DevUI<br/>Browser-based local debugger"]
+
+        DEVUI --> VIZ["Visual agent execution<br/>message flows / tool calls<br/>orchestration decisions"]
+
+        AG_MAF --> AUDIT_LOG["Audit Log<br/>Every action recorded"]
+
+        AUDIT_LOG --> AZ_LOG["Azure Log Analytics"]
+
     end
-    
-    style "MAF Observability" fill:#0078d4,color:#fff
+
+    style MAF_OBS fill:#0078d4,color:#fff,stroke:#005a9e
 ```
 
 **MAF Observability Features:**
@@ -1249,25 +1292,33 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph "OpenAI SDK Observability"
-        AG_OAI[Agent Execution] --> AUTO_TRACE[Automatic Trace Generation<br/>Zero configuration]
-        AUTO_TRACE --> SPANS_OAI[Trace with Spans]
-        SPANS_OAI --> OAI_DASH[OpenAI Platform Dashboard<br/>Visualize / Debug / Monitor]
-        SPANS_OAI --> CUSTOM_PROC[Custom Trace Processors<br/>Export to any backend]
-        CUSTOM_PROC --> EXT1[LangSmith]
-        CUSTOM_PROC --> EXT2[Arize Phoenix]
-        CUSTOM_PROC --> EXT3[Custom OTEL]
-        
-        subgraph "Span Types Captured"
-            SP1[LLM calls with prompts/completions]
-            SP2[Tool invocations with inputs/outputs]
-            SP3[Handoffs between agents]
-            SP4[Guardrail checks and results]
-            SP5[Session state changes]
+
+    subgraph OAI_OBS["OpenAI SDK Observability"]
+
+        AG_OAI["Agent Execution"]
+            --> AUTO_TRACE["Automatic Trace Generation<br/>Zero configuration"]
+
+        AUTO_TRACE --> SPANS_OAI["Trace with Spans"]
+
+        SPANS_OAI --> OAI_DASH["OpenAI Platform Dashboard<br/>Visualize / Debug / Monitor"]
+
+        SPANS_OAI --> CUSTOM_PROC["Custom Trace Processors<br/>Export to any backend"]
+
+        CUSTOM_PROC --> EXT1["LangSmith"]
+        CUSTOM_PROC --> EXT2["Arize Phoenix"]
+        CUSTOM_PROC --> EXT3["Custom OTEL"]
+
+        subgraph SPAN_TYPES["Span Types Captured"]
+            SP1["LLM calls with prompts/completions"]
+            SP2["Tool invocations with inputs/outputs"]
+            SP3["Handoffs between agents"]
+            SP4["Guardrail checks and results"]
+            SP5["Session state changes"]
         end
+
     end
-    
-    style "MAF Observability" fill:#10a37f,color:#fff
+
+    style OAI_OBS fill:#10a37f,color:#fff,stroke:#0d8a6b
 ```
 
 **OpenAI SDK Trace Example:**
@@ -1312,47 +1363,53 @@ set_trace_processors([DatadogProcessor()])
 
 ```mermaid
 graph TB
-    subgraph "MAF Multi-Provider Model Support"
-        AG_M[Agent] --> MC[ModelClient Abstraction]
-        
-        MC --> MS_FOUNDRY[Microsoft Foundry<br/>First-party, Azure-native]
-        MC --> AZ_OAI[Azure OpenAI<br/>GPT-5.x / o4-mini / etc]
-        MC --> OAI[OpenAI<br/>Direct API]
-        MC --> ANTHROPIC[Anthropic Claude<br/>Claude 4.x models]
-        MC --> BEDROCK[Amazon Bedrock<br/>Claude / Titan / etc]
-        MC --> GEMINI[Google Gemini<br/>Gemini 2.x models]
-        MC --> OLLAMA[Ollama<br/>Local models: Llama / Mistral / etc]
-        MC --> CUSTOM[Custom ModelClient<br/>Any Chat Completions API]
-        
-        MS_FOUNDRY --> EMBED[Embedding Models]
-        AZ_OAI --> CHAT_COMP[Chat Completions]
-        AZ_OAI --> RESP_API[Responses API]
+
+    subgraph MAF_MODELS["MAF Multi-Provider Model Support"]
+
+        AG_M["Agent"] --> MC["ModelClient Abstraction"]
+
+        MC --> MS_FOUNDRY["Microsoft Foundry<br/>First-party, Azure-native"]
+        MC --> AZ_OAI["Azure OpenAI<br/>GPT-5.x / o4-mini / etc"]
+        MC --> OAI["OpenAI<br/>Direct API"]
+        MC --> ANTHROPIC["Anthropic Claude<br/>Claude 4.x models"]
+        MC --> BEDROCK["Amazon Bedrock<br/>Claude / Titan / etc"]
+        MC --> GEMINI["Google Gemini<br/>Gemini 2.x models"]
+        MC --> OLLAMA["Ollama<br/>Local models: Llama / Mistral / etc"]
+        MC --> CUSTOM["Custom ModelClient<br/>Any Chat Completions API"]
+
+        MS_FOUNDRY --> EMBED["Embedding Models"]
+        AZ_OAI --> CHAT_COMP["Chat Completions"]
+        AZ_OAI --> RESP_API["Responses API"]
+
     end
-    
-    style "MAF Multi-Provider Model Support" fill:#0078d4,color:#fff
+
+    style MAF_MODELS fill:#0078d4,color:#fff,stroke:#005a9e
 ```
 
 ### OpenAI SDK Model Provider Support
 
 ```mermaid
 graph TB
-    subgraph "OpenAI SDK Provider Support"
-        AG_O[Agent] --> MODEL_PARAM[model parameter]
-        
-        MODEL_PARAM --> OAI_NATIVE[OpenAI Models<br/>GPT-5.x / o4 / Codex / etc.<br/>Best performance - Responses API]
-        MODEL_PARAM --> COMPAT[100+ Compatible LLMs<br/>via Chat Completions API]
-        
-        COMPAT --> ANTHROPIC_O[Anthropic Claude<br/>via API endpoint]
-        COMPAT --> GEMINI_O[Google Gemini<br/>via API endpoint]
-        COMPAT --> LOCAL[Local Models<br/>Ollama / LM Studio]
-        COMPAT --> AZURE_O[Azure OpenAI<br/>via Azure endpoint]
-        COMPAT --> BEDROCK_O[Amazon Bedrock<br/>via compatible endpoint]
-        COMPAT --> GROQ[Groq<br/>Fast inference]
-        COMPAT --> TOGETHER[Together AI]
-        COMPAT --> OPENROUTER[OpenRouter<br/>Any model]
+
+    subgraph OAI_PROVIDERS["OpenAI SDK Provider Support"]
+
+        AG_O["Agent"] --> MODEL_PARAM["model parameter"]
+
+        MODEL_PARAM --> OAI_NATIVE["OpenAI Models<br/>GPT-5.x / o4 / Codex / etc.<br/>Best performance - Responses API"]
+        MODEL_PARAM --> COMPAT["100+ Compatible LLMs<br/>via Chat Completions API"]
+
+        COMPAT --> ANTHROPIC_O["Anthropic Claude<br/>via API endpoint"]
+        COMPAT --> GEMINI_O["Google Gemini<br/>via API endpoint"]
+        COMPAT --> LOCAL["Local Models<br/>Ollama / LM Studio"]
+        COMPAT --> AZURE_O["Azure OpenAI<br/>via Azure endpoint"]
+        COMPAT --> BEDROCK_O["Amazon Bedrock<br/>via compatible endpoint"]
+        COMPAT --> GROQ["Groq<br/>Fast inference"]
+        COMPAT --> TOGETHER["Together AI"]
+        COMPAT --> OPENROUTER["OpenRouter<br/>Any model"]
+
     end
-    
-    style "OpenAI SDK Provider Support" fill:#10a37f,color:#fff
+
+    style OAI_PROVIDERS fill:#10a37f,color:#fff,stroke:#0d8a6b
 ```
 
 ### Model Support Comparison
@@ -1587,25 +1644,28 @@ OpenAI's April 2026 update added native sandbox support as a core SDK capability
 
 ```mermaid
 graph TB
-    subgraph "OpenAI SDK Sandbox Architecture"
-        AG_SB[Sandbox Agent] --> MANIFEST[Manifest<br/>Defines workspace: files, dependencies, tools]
-        MANIFEST --> SANDBOX[Sandbox Environment]
-        
-        SANDBOX --> E2B_SB[E2B]
-        SANDBOX --> MODAL_SB[Modal]
-        SANDBOX --> VERCEL_SB[Vercel]
-        SANDBOX --> RUNLOOP_SB[Runloop]
-        SANDBOX --> DAYTONA_SB[Daytona]
-        SANDBOX --> BLAXEL_SB[Blaxel]
-        SANDBOX --> CF_SB[Cloudflare]
-        SANDBOX --> CUSTOM_SB[Custom Sandbox<br/>Bring Your Own]
-        
-        SANDBOX --> TOOLS_SB[Sandbox Tools<br/>Filesystem read/write<br/>Shell execution<br/>Install dependencies<br/>Apply patch<br/>Run code]
-        
-        SANDBOX --> RESUME[Resumable Sessions<br/>Long-running sandbox state]
+
+    subgraph OAI_SANDBOX["OpenAI SDK Sandbox Architecture"]
+
+        AG_SB["Sandbox Agent"] --> MANIFEST["Manifest<br/>Defines workspace: files, dependencies, tools"]
+        MANIFEST --> SANDBOX["Sandbox Environment"]
+
+        SANDBOX --> E2B_SB["E2B"]
+        SANDBOX --> MODAL_SB["Modal"]
+        SANDBOX --> VERCEL_SB["Vercel"]
+        SANDBOX --> RUNLOOP_SB["Runloop"]
+        SANDBOX --> DAYTONA_SB["Daytona"]
+        SANDBOX --> BLAXEL_SB["Blaxel"]
+        SANDBOX --> CF_SB["Cloudflare"]
+        SANDBOX --> CUSTOM_SB["Custom Sandbox<br/>Bring Your Own"]
+
+        SANDBOX --> TOOLS_SB["Sandbox Tools<br/>Filesystem read/write<br/>Shell execution<br/>Install dependencies<br/>Apply patch<br/>Run code"]
+
+        SANDBOX --> RESUME["Resumable Sessions<br/>Long-running sandbox state"]
+
     end
-    
-    style "OpenAI SDK Sandbox Architecture" fill:#10a37f,color:#fff
+
+    style OAI_SANDBOX fill:#10a37f,color:#fff,stroke:#0d8a6b
 ```
 
 **Sandbox Use Cases:**
@@ -1795,52 +1855,59 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph "MAF Enterprise Security"
-        AGENT_SEC[Agent Execution] --> AUTH_LAYER[Authentication Layer]
-        
-        AUTH_LAYER --> ENTRA[Microsoft Entra ID<br/>OAuth 2.0 / OIDC]
-        AUTH_LAYER --> AKV[Azure Key Vault<br/>Secret management]
-        AUTH_LAYER --> MANAGED[Managed Identity<br/>Zero-secret deployments]
-        
-        AGENT_SEC --> AUTHZ[Authorization]
-        AUTHZ --> RBAC[Role-Based Access Control<br/>Which agents access which tools/data]
-        AUTHZ --> POLICY[Policy Enforcement<br/>Compliance rules via middleware]
-        
-        AGENT_SEC --> AUDIT_SEC[Compliance & Audit]
-        AUDIT_SEC --> AUDIT_TRAIL[Immutable Audit Trail<br/>Every action logged]
-        AUDIT_SEC --> SOC2[SOC 2 Compliance<br/>via Azure platform]
-        AUDIT_SEC --> GDPR[GDPR / HIPAA / FINRA<br/>Compliance middleware]
-        
-        AGENT_SEC --> NET_SEC[Network Security]
-        NET_SEC --> VPN[Azure VNet Integration]
-        NET_SEC --> PEP[Private Endpoints]
-        NET_SEC --> FIREWALL[Azure Firewall]
+
+    subgraph SEC["MAF Enterprise Security"]
+
+        AGENT_SEC["Agent Execution"] --> AUTH_LAYER["Authentication Layer"]
+
+        AUTH_LAYER --> ENTRA["Microsoft Entra ID<br/>OAuth 2.0 / OIDC"]
+        AUTH_LAYER --> AKV["Azure Key Vault<br/>Secret management"]
+        AUTH_LAYER --> MANAGED["Managed Identity<br/>Zero-secret deployments"]
+
+        AGENT_SEC --> AUTHZ["Authorization"]
+
+        AUTHZ --> RBAC["Role-Based Access Control<br/>Which agents access which tools/data"]
+        AUTHZ --> POLICY["Policy Enforcement<br/>Compliance rules via middleware"]
+
+        AGENT_SEC --> AUDIT_SEC["Compliance & Audit"]
+
+        AUDIT_SEC --> AUDIT_TRAIL["Immutable Audit Trail<br/>Every action logged"]
+        AUDIT_SEC --> SOC2["SOC 2 Compliance<br/>via Azure platform"]
+        AUDIT_SEC --> GDPR["GDPR / HIPAA / FINRA<br/>Compliance middleware"]
+
+        AGENT_SEC --> NET_SEC["Network Security"]
+
+        NET_SEC --> VPN["Azure VNet Integration"]
+        NET_SEC --> PEP["Private Endpoints"]
+        NET_SEC --> FIREWALL["Azure Firewall"]
+
     end
-    
-    style "MAF Enterprise Security" fill:#0078d4,color:#fff
 ```
 
 ### OpenAI SDK Security
 
 ```mermaid
 graph TB
-    subgraph "OpenAI SDK Security Model"
-        SDK_SEC[SDK Layer] --> API_KEY[API Key / Bearer Token<br/>Environment variable]
-        SDK_SEC --> CUSTOM_AUTH[Custom Auth<br/>Application responsibility]
-        
-        SDK_SEC --> GUARD_SEC[Guardrails as Security]
-        GUARD_SEC --> INPUT_SEC[Input Validation<br/>Custom guardrails]
-        GUARD_SEC --> OUTPUT_SEC[Output Filtering<br/>Custom guardrails]
-        
-        SDK_SEC --> MODEL_SEC[Model-Level Safety]
-        MODEL_SEC --> OAI_SAFETY[OpenAI Safety Systems<br/>Built into model]
-        MODEL_SEC --> MOD_API[Moderation API<br/>Via hosted tools]
-        
-        SDK_SEC --> TRACE_SEC[Trace Security]
-        TRACE_SEC --> DATA_RET[Data Retention<br/>Business data not used for training]
+
+    subgraph OAI_SEC["OpenAI SDK Security Model"]
+
+        SDK_SEC["SDK Layer"] --> API_KEY["API Key / Bearer Token<br/>Environment variable"]
+        SDK_SEC --> CUSTOM_AUTH["Custom Auth<br/>Application responsibility"]
+
+        SDK_SEC --> GUARD_SEC["Guardrails as Security"]
+        GUARD_SEC --> INPUT_SEC["Input Validation<br/>Custom guardrails"]
+        GUARD_SEC --> OUTPUT_SEC["Output Filtering<br/>Custom guardrails"]
+
+        SDK_SEC --> MODEL_SEC["Model-Level Safety"]
+        MODEL_SEC --> OAI_SAFETY["OpenAI Safety Systems<br/>Built into model"]
+        MODEL_SEC --> MOD_API["Moderation API<br/>Via hosted tools"]
+
+        SDK_SEC --> TRACE_SEC["Trace Security"]
+        TRACE_SEC --> DATA_RET["Data Retention<br/>Business data not used for training"]
+
     end
-    
-    style "MAF Enterprise Security" fill:#10a37f,color:#fff
+
+    style OAI_SEC fill:#10a37f,color:#fff,stroke:#0d8a6b
 ```
 
 | Security Feature | MAF | OpenAI SDK |
@@ -1987,19 +2054,14 @@ async with RealtimeSession(voice_agent) as session:
 ## 22. Enterprise Readiness
 
 ```mermaid
-radar
-  title Enterprise Readiness Radar
-  columns Microsoft Agent Framework, OpenAI Agents SDK
-  "Audit & Compliance": [9, 5]
-  "Security & Auth": [9, 6]
-  "Scalability": [8, 7]
-  "Observability": [8, 7]
-  "Long-term Support": [9, 7]
-  "Governance": [9, 5]
-  "Microsoft Stack Integration": [10, 4]
-  "Developer Productivity": [7, 9]
-  "Community Ecosystem": [6, 9]
-  "Time to Market": [6, 9]
+xychart-beta
+    title Enterprise Readiness Scores
+
+    x-axis ["Audit","Security","Scalability","Observability","Support","Governance","MS Integration","Dev UX","Community","Speed"]
+    y-axis "Score" 0 --> 10
+
+    bar "Microsoft Agent Framework" [9,9,8,8,9,9,10,7,6,6]
+    bar "OpenAI Agents SDK" [5,6,7,7,7,5,4,9,9,9]
 ```
 
 *(Note: Radar chart representation — higher = better for each dimension)*
@@ -2031,33 +2093,30 @@ radar
 
 ```mermaid
 graph TB
-    subgraph "Open Standards Support"
-        
-        subgraph "Model Context Protocol (MCP)"
-            MCP_MAF[MAF: MCPClient<br/>GA in v1.0<br/>Dynamic tool discovery<br/>MCP Steering Committee member]
-            MCP_OAI[OpenAI SDK: MCPServer<br/>Native integration<br/>Same as function tools]
+
+    subgraph OS["Open Standards Support"]
+
+        subgraph MCP["Model Context Protocol (MCP)"]
+            MCP_MAF["MAF: MCPClient<br/>GA in v1.0<br/>Dynamic tool discovery<br/>MCP Steering Committee member"]
+            MCP_OAI["OpenAI SDK: MCPServer<br/>Native integration<br/>Same as function tools"]
         end
-        
-        subgraph "Agent-to-Agent (A2A)"
-            A2A_MAF[MAF: A2A Protocol<br/>Cross-runtime: Python ↔ .NET<br/>Cross-framework: MAF ↔ LangGraph<br/>A2A 1.0 full spec: coming soon]
-            A2A_OAI[OpenAI SDK: No native A2A<br/>Agent-as-tool is same-runtime only]
+
+        subgraph A2A["Agent-to-Agent (A2A)"]
+            A2A_MAF["MAF: A2A Protocol<br/>Cross-runtime: Python ↔ .NET<br/>Cross-framework: MAF ↔ LangGraph<br/>A2A 1.0 full spec: coming soon"]
+            A2A_OAI["OpenAI SDK: No native A2A<br/>Agent-as-tool is same-runtime only"]
         end
-        
-        subgraph "OpenAPI"
-            OA_MAF[MAF: OpenAPI tool auto-generation<br/>Connect any REST API as agent tool]
-            OA_OAI[OpenAI SDK: Manual wrapping required]
+
+        subgraph OPENAPI["OpenAPI"]
+            OA_MAF["MAF: OpenAPI tool auto-generation<br/>Connect any REST API as agent tool"]
+            OA_OAI["OpenAI SDK: Manual wrapping required"]
         end
-        
-        subgraph "AGENTS.md"
-            AGENTS_OAI[OpenAI SDK: AGENTS.md support<br/>Agent documentation standard]
-            AGENTS_MAF[MAF: YAML declarative definitions<br/>Own documentation standard]
+
+        subgraph AGENTSMD["AGENTS.md"]
+            AGENTS_OAI["OpenAI SDK: AGENTS.md support<br/>Agent documentation standard"]
+            AGENTS_MAF["MAF: YAML declarative definitions<br/>Own documentation standard"]
         end
+
     end
-    
-    style MCP_MAF fill:#0078d4,color:#fff
-    style A2A_MAF fill:#0078d4,color:#fff
-    style MCP_OAI fill:#10a37f,color:#fff
-    style AGENTS_OAI fill:#10a37f,color:#fff
 ```
 
 ### A2A Protocol Deep Dive (MAF Advantage)
@@ -2263,40 +2322,38 @@ flowchart TD
 
 ```mermaid
 graph TB
-    subgraph "Use Case Decision Matrix"
-        
-        subgraph "Strong MAF Fit"
-            UC1[Enterprise .NET applications<br/>C#, Azure-native stack]
-            UC2[Regulated industries<br/>HIPAA, FINRA, GDPR compliance]
-            UC3[Complex deterministic workflows<br/>Multi-step, checkpointed processes]
-            UC4[Cross-language agent fleets<br/>Python + .NET agents coordinating]
-            UC5[Microsoft 365 integration<br/>Teams, Copilot, SharePoint]
-            UC6[Long-running workflows<br/>Days/weeks execution, HITL gates]
-            UC7[Research-to-production pipelines<br/>AutoGen patterns in enterprise]
-        end
-        
-        subgraph "Strong OpenAI SDK Fit"
-            UC8[Rapid prototyping<br/>Ship in hours not days]
-            UC9[Customer support automation<br/>Handoff triage patterns]
-            UC10[Python/TypeScript teams<br/>Not invested in .NET]
-            UC11[Sandbox code execution agents<br/>Filesystem, shell, code]
-            UC12[Voice agents<br/>Realtime API integration]
-            UC13[OpenAI-optimized workloads<br/>GPT-5.x / o4 model performance]
-            UC14[Simple to moderate orchestration<br/>Handoffs sufficient]
-        end
-        
-        subgraph "Both Frameworks Suitable"
-            UC15[Multi-agent research assistants]
-            UC16[Data analysis pipelines]
-            UC17[Content generation workflows]
-            UC18[RAG-based enterprise search]
-            UC19[Customer service automation]
-        end
+
+    subgraph MAF["Strong MAF Fit"]
+        UC1["Enterprise .NET applications<br/>C#, Azure-native stack"]
+        UC2["Regulated industries<br/>HIPAA, FINRA, GDPR compliance"]
+        UC3["Complex deterministic workflows<br/>Multi-step, checkpointed processes"]
+        UC4["Cross-language agent fleets<br/>Python + .NET agents coordinating"]
+        UC5["Microsoft 365 integration<br/>Teams, Copilot, SharePoint"]
+        UC6["Long-running workflows<br/>Days/weeks execution, HITL gates"]
+        UC7["Research-to-production pipelines<br/>AutoGen patterns in enterprise"]
     end
-    
-    style "Strong MAF Fit" fill:#deecf9,stroke:#0078d4
-    style "Strong OpenAI SDK Fit" fill:#d4f1e8,stroke:#10a37f
-    style "Both Frameworks Suitable" fill:#fff9db,stroke:#f0c000
+
+    subgraph OAI["Strong OpenAI SDK Fit"]
+        UC8["Rapid prototyping<br/>Ship in hours not days"]
+        UC9["Customer support automation<br/>Handoff triage patterns"]
+        UC10["Python/TypeScript teams<br/>Not invested in .NET"]
+        UC11["Sandbox code execution agents<br/>Filesystem, shell, code"]
+        UC12["Voice agents<br/>Realtime API integration"]
+        UC13["OpenAI-optimized workloads<br/>GPT-5.x / o4 model performance"]
+        UC14["Simple to moderate orchestration<br/>Handoffs sufficient"]
+    end
+
+    subgraph BOTH["Both Frameworks Suitable"]
+        UC15["Multi-agent research assistants"]
+        UC16["Data analysis pipelines"]
+        UC17["Content generation workflows"]
+        UC18["RAG-based enterprise search"]
+        UC19["Customer service automation"]
+    end
+
+    style MAF fill:#deecf9,stroke:#0078d4
+    style OAI fill:#d4f1e8,stroke:#10a37f
+    style BOTH fill:#fff9db,stroke:#f0c000
 ```
 
 ### Detailed Use Case Analysis
@@ -2804,30 +2861,31 @@ timeline
 
 ```mermaid
 graph LR
-    subgraph "Microsoft Agent Framework: When to Choose"
-        M1[.NET / C# stack]
-        M2[Enterprise compliance requirements]
-        M3[Complex deterministic workflows]
-        M4[Azure / Microsoft ecosystem]
-        M5[Cross-framework A2A needed]
-        M6[Long-term LTS commitment]
-        M7[Microsoft 365 integration]
-        M8[Research → Production patterns]
+
+    subgraph MAF["Microsoft Agent Framework: When to Choose"]
+        M1[".NET / C# stack"]
+        M2["Enterprise compliance requirements"]
+        M3["Complex deterministic workflows"]
+        M4["Azure / Microsoft ecosystem"]
+        M5["Cross-framework A2A needed"]
+        M6["Long-term LTS commitment"]
+        M7["Microsoft 365 integration"]
+        M8["Research → Production patterns"]
     end
-    
-    subgraph "OpenAI Agents SDK: When to Choose"
-        O1[Rapid prototyping speed]
-        O2[Python / TypeScript first]
-        O3[Simple to moderate orchestration]
-        O4[Voice agent needs]
-        O5[Sandbox code execution]
-        O6[GPT-5.x optimization]
-        O7[Minimal infrastructure]
-        O8[Large community ecosystem]
+
+    subgraph OAI["OpenAI Agents SDK: When to Choose"]
+        O1["Rapid prototyping speed"]
+        O2["Python / TypeScript first"]
+        O3["Simple to moderate orchestration"]
+        O4["Voice agent needs"]
+        O5["Sandbox code execution"]
+        O6["GPT-5.x optimization"]
+        O7["Minimal infrastructure"]
+        O8["Large community ecosystem"]
     end
-    
-    style "Microsoft Agent Framework: When to Choose" fill:#deecf9,stroke:#0078d4
-    style "OpenAI Agents SDK: When to Choose" fill:#d4f1e8,stroke:#10a37f
+
+    style MAF fill:#deecf9,stroke:#0078d4
+    style OAI fill:#d4f1e8,stroke:#10a37f
 ```
 
 ### The Fundamental Architectural Tension
