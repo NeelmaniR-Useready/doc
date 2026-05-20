@@ -1,6 +1,7 @@
 # Microsoft Agent Framework vs OpenAI Agents SDK
 ## A Comprehensive, Exhaustive, Definitive Comparative Analysis
 
+
 > **Document Status:** Current as of May 2026 | MAF v1.0 GA (April 3, 2026) | OpenAI Agents SDK (continuously updated, April 2026 evolution)
 > 
 > **Scope:** This document covers every architectural, functional, operational, developer-experience, and strategic dimension of both frameworks. It is intended as the single authoritative reference for teams evaluating, adopting, or migrating between these platforms.
